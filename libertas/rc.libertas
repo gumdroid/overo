@@ -1,0 +1,46 @@
+#!/system/bin/sh
+
+load_libertas()
+{
+	insmod /system/bin/libertas/libertas.ko
+	insmod /system/bin/libertas/libertas_sdio.ko
+
+	# Let WiFi part know that the driver is already loaded
+	setprop wlan.driver.status ok
+
+	echo "Loaded Libertas WiFi modules"
+
+	return 0;
+}
+
+unload_libertas()
+{
+if rmmod libertas; then :; else return 1; fi
+if rmmod libertas_sdio; then :; else return 1; fi
+	echo "Unloaded Libertas WiFi modules."
+	return 0;
+}
+
+# Deal with the type of invocation we get.
+#
+case "$1" in
+"start")
+	load_libertas
+	;;
+stop)
+	if ! unload_libertas; then
+		echo "Couldn't unload modules" >&2;
+	fi
+	;;
+reload|restart)
+	if unload_libertas; then
+		load_libertas
+	else
+		echo "Couldn't unload modules" >&2;
+	fi
+	;;
+*)
+	echo "$0: unknown argument $1." >&2;
+	;;
+esac
+
