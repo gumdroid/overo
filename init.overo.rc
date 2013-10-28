@@ -1,0 +1,74 @@
+import init.overo.usb.rc
+
+on early-init
+    mount debugfs debugfs /sys/kernel/debug
+
+on init
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
+
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
+on fs
+    mount_all /fstab.overo
+
+    # This board does not have battery
+    setprop hw.nobattery true
+
+    # Allow system to manipulate backlight
+    chown system system /sys/class/backlight/tps65217-bl/brightness
+
+on post-fs-data
+    # we will remap this as /storage/sdcard0 with the sdcard fuse tool
+    mkdir /data/media 0770 media_rw media_rw
+
+    # Create the directories used for wifi
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+
+on boot
+    # Hold a wakelock to stay awake
+    write /sys/power/wake_lock hack
+
+service pvr /system/bin/sgx/rc.pvr start
+    class core
+    oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
+    disabled
+    oneshot
+
+service iprenew_eth0 /system/bin/dhcpcd -n
+    disabled
+    oneshot
+
+# virtual sdcard daemon running as media_rw (1023)
+service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
+    class late_start
+
+service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant -imlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -dd
+    class main
+    socket wpa_mlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_mlan0 /system/bin/dhcpcd -aABDKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_mlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
