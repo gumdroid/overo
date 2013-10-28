@@ -63,3 +63,10 @@ sgx_clean:
 uinitrd: ramdisk
 	mkdir -p $(PRODUCT_OUT)/boot
 	mkimage -A arm -O linux -T ramdisk -C gzip -d $(PRODUCT_OUT)/ramdisk.img $(PRODUCT_OUT)/boot/uInitrd
+
+
+# Sample media files
+media: 
+	mkdir -p $(PRODUCT_OUT)/data/media
+	$(ACP) device/gumstix/pepper/media/* $(PRODUCT_OUT)/data/media/
+	#tar cvjf mediatarball.tar.bz $(PRODUCT_OUT)/userdata -C $(PRODUCT_OUT)/userdata/
