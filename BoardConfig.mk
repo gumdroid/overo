@@ -19,6 +19,11 @@ TARGET_BOARD_PLATFORM := omap3
 TARGET_BOOTLOADER_BOARD_NAME := overo
 ARCH_ARM_HAVE_NEON := true
 
+# Use SGX for OpenGL
+OMAPES := 5.x
+USE_OPENGL_RENDERER := true
+BOARD_EGL_CFG := device/gumstix/overo/egl.cfg
+
 # No Recovery Parition
 TARGET_NO_RECOVERY := true
 
