@@ -3,10 +3,8 @@
 # Build bootloader and kernel from source; don't just install binaries
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := true
-UBOOT_DIR := $(TOP)/uboot
 UBOOT_CONFIG := omap3_overo
-KERNEL_DIR := $(TOP)/kernel
-KERNEL_CONFIG := overo_android_defconfig
+KERNEL_CONFIG := overo_android
 
 # As of Android 4.3, no special optimizations for Cortex-A8
 TARGET_ARCH := arm
@@ -27,8 +25,10 @@ BOARD_EGL_CFG := device/gumstix/overo/egl.cfg
 # No Recovery Parition
 TARGET_NO_RECOVERY := true
 
-# No cell modem
-TARGET_NO_RADIOIMAGE := true
-
-# Not sute about these settings
+# These aren't strictly necessary but avoids compilation
+# errors on standard Android make targets
 TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 268435456
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 536870912
+BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+BOARD_FLASH_BLOCK_SIZE := 4096

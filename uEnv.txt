@@ -1,0 +1,4 @@
+loaduimage=fatload mmc 0:1 0x82000000 uImage
+loadramdisk=fatload mmc 0:1 0x81600000 uInitrd
+bootargs=console=ttyO2,115200n8 androidboot.console=ttyO2 init=/init mpurate=${mpurate} vram=${vram} omapfb.mode=dvi:${dvimode} omapdss.def_disp=${defaultdisplay}
+uenvcmd=run loaduimage; run loadramdisk; bootm 0x82000000 0x81600000
