@@ -19,13 +19,10 @@ on init
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
 on fs
-    mount_all /fstab.gumstixovero
+    mount_all /fstab.overo
 
     # This board does not have battery
     setprop hw.nobattery true
-
-    # Allow system to manipulate backlight
-    chown system system /sys/class/backlight/tps65217-bl/brightness
 
 on post-fs-data
     # we will remap this as /storage/sdcard0 with the sdcard fuse tool
@@ -41,9 +38,9 @@ on boot
     # Hold a wakelock to stay awake
     write /sys/power/wake_lock hack
 
-service pvr /system/bin/sgx/rc.pvr start
-    class core
-    oneshot
+#service pvr /system/bin/pvr-service start
+#    class core
+#    oneshot
 
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
     disabled

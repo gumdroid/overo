@@ -10,4 +10,3 @@ PRODUCT_DEVICE := overo
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := Overo
 PRODUCT_MANUFACTURER := Gumstix_Inc 
-# Note, ro.hardware is 'gumstixovero' as this comes from the kernel
