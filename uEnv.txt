@@ -3,4 +3,4 @@ loadfdt=load mmc ${mmcdev}:2 ${fdtaddr} ${bootdir}/${fdtfile}
 loadramdisk=fatload mmc 0:1 0x81600000 uInitrd
 loadzimage=load mmc ${mmcdev}:2 ${loadaddr} ${bootdir}/${bootfile}
 bootargs=console=ttyO2,115200n8 androidboot.console=ttyO2 androidboot.hardware=overo vram=12M omapfb.mode=dvi:1024x768MR-16@60 omapdss.def_disp=dvi
-uenvcmd=run loadzimage; run loadramdisk; run loadfdt; bootz ${loadaddr} 0x81600000 ${fdtaddr}
+uenvcmd=run loadzimage; run loadramdisk; bootz ${loadaddr} 0x81600000
