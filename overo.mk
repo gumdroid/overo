@@ -1,7 +1,7 @@
 # This is the build configuration for Gumstix Overo Computer-On-Modules.
 # It is based on the 'Toro' device conifguration file (Copyright Google Inc.)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_no_telephony.mk)
 $(call inherit-product, device/gumstix/common/common.mk)
 $(call inherit-product, device/gumstix/overo/device.mk)
 

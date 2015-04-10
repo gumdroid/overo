@@ -22,9 +22,6 @@ PRODUCT_COPY_FILES := \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml
 
-# Don't make SGX work too hard
-# PRODUCT_PROPERTY_OVERRIDES := hwui.render_dirty_regions=false
-
 # Explicitly specify dpi, otherwise the icons don't show up correctly with SGX enabled
 # Our screen is 4.3" 480x272: roughly 120 display-independent-pixels
 PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=120
@@ -32,5 +29,3 @@ PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=120
 # System specific libraries
 PRODUCT_PACKAGES += \
 	lights.overo
-
-$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
