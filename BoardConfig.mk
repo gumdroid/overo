@@ -17,7 +17,7 @@ ARCH_ARM_HAVE_NEON := true
 
 # Use SGX for OpenGL
 OMAPES := 5.x
-USE_OPENGL_RENDERER := true
+#USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/gumstix/overo/egl.cfg
 
 # No Recovery Parition

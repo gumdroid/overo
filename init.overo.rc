@@ -38,9 +38,10 @@ on boot
     # Hold a wakelock to stay awake
     write /sys/power/wake_lock hack
 
-#service pvr /system/bin/pvr-service start
-#    class core
-#    oneshot
+service pvr /system/bin/pvr-service start
+    disabled
+    class core
+    oneshot
 
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
     disabled
