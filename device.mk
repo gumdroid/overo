@@ -29,3 +29,6 @@ PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=120
 # System specific libraries
 PRODUCT_PACKAGES += \
 	lights.overo
+
+# SGX
+PRODUCT_PACKAGES += sgx_userspace_blobs
